@@ -1,7 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
+    <color name="background">#212529</color>
+    <color name="textPrimary">#f8f9fa</color>
+    <color name="buttonPrimary">#ced4da</color>
+
     <style name="Base.Theme.KotlinWebView" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
     </style>
 </resources>

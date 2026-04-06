@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 super.onPageFinished(view, url)
 
                 checkLoginState()
-                
+
             }
         }
     }

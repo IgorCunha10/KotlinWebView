@@ -6,7 +6,7 @@
     android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".app.src.MainActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -32,6 +32,7 @@
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabNewScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -43,5 +44,12 @@
         >
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    <WebView
+        android:id="@+id/web"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </WebView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

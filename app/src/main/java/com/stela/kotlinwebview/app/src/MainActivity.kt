@@ -21,15 +21,15 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        initView()
+    }
+
+    fun initView() {
+        val fabNewScan = findViewById<FloatingActionButton>(R.id.fabNewScan)
         val webView = findViewById<WebView>(R.id.web)
 
         webView.loadUrl("http://192.168.1.180/browser")
         webView.settings.javaScriptEnabled = true
         webView.webViewClient = WebViewClient()
-
-    }
-
-    fun initInsets() {
-        val fabNewScan = findViewById<FloatingActionButton>(R.id.fabNewScan)
     }
 }

@@ -31,13 +31,20 @@ class MainActivity : AppCompatActivity() {
         initView()
         webView = findViewById<WebView>(R.id.web)
 
-        fabScanBtn.hide()
         initWebView()
+        fabScanBtn.hide()
+        initListeners()
+    }
 
+    private fun initListeners() {
+        fabScanBtn.setOnClickListener {
+            val intent = Intent(this, ScanScreen::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initWebView() {
-        webView.settings.javaScriptEnabled == true
+        webView.settings.javaScriptEnabled = true
 
         webView.webViewClient = object : WebViewClient() {
 
@@ -61,18 +68,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateScanButton(loggedIn: Boolean) {
         runOnUiThread {
-            if(loggedIn) {
+            if (loggedIn) {
                 fabScanBtn.show()
             } else {
                 fabScanBtn.hide()
             }
         }
-
     }
 
     fun initView() {
         fabScanBtn = findViewById<FloatingActionButton>(R.id.fabNewScan)
     }
-
 
 }

@@ -3,6 +3,7 @@
     <color name="background">#212529</color>
     <color name="textPrimary">#f8f9fa</color>
     <color name="buttonPrimary">#ced4da</color>
+    <color name="cardBackground">#495057</color>
 
     <style name="Base.Theme.KotlinWebView" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->

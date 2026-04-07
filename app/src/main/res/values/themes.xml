@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
 
     <color name="background">#e9ecef</color>
+    <color name="cardBackground">#f8f9fa</color>
     <color name="textPrimary">#212529</color>
     <color name="buttonPrimary">#6c757d</color>
 

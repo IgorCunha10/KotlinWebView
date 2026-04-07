@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private lateinit var webView: WebView
-    private lateinit var webAppInterface: WebAppInterface
     private lateinit var fabScanBtn: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,57 +28,50 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        webView = findViewById<WebView>(R.id.web)
-        webAppInterface = WebAppInterface(this)
-
         initView()
+        webView = findViewById<WebView>(R.id.web)
+
+        fabScanBtn.hide()
         initWebView()
-        checkLoginState()
-        showButton()
+
+    }
+
+    private fun initWebView() {
+        webView.settings.javaScriptEnabled == true
+
+        webView.webViewClient = object : WebViewClient() {
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                checkUrl(url)
+            }
+
+            override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
+                super.doUpdateVisitedHistory(view, url, isReload)
+                checkUrl(url)
+            }
+        }
+        webView.loadUrl("http://192.168.1.180/browser/#/login")
+    }
+
+    private fun checkUrl(url: String?) {
+        val isLoggedIn = url?.contains("#/patients") == true
+        updateScanButton(isLoggedIn)
+    }
+
+    private fun updateScanButton(loggedIn: Boolean) {
+        runOnUiThread {
+            if(loggedIn) {
+                fabScanBtn.show()
+            } else {
+                fabScanBtn.hide()
+            }
+        }
+
     }
 
     fun initView() {
         fabScanBtn = findViewById<FloatingActionButton>(R.id.fabNewScan)
-    }
-
-    fun initWebView() {
-        webView.loadUrl("http://192.168.1.180/browser")
-        webView.settings.javaScriptEnabled = true
-        webView.webViewClient = WebViewClient()
-        webView.addJavascriptInterface(webAppInterface, "Android")
-
-        webView.webViewClient = object : WebViewClient() {
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-
-                checkLoginState()
-
-            }
-        }
-    }
-
-    private fun checkLoginState() {
-        webView.evaluateJavascript(
-            """
-        (function() {
-            var token = localStorage.getItem('auth_token');
-            if (token) {
-                Android.onUserLoggedIn(token);
-            } else {
-                Android.onUserLoggedOut();
-            }
-        })();
-        """.trimIndent(),
-            null
-        )
-    }
-
-    private fun showButton() {
-        if(webAppInterface.isLoggedIn) {
-            fabScanBtn.show()
-        } else {
-            fabScanBtn.hide()
-        }
     }
 
 

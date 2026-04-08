@@ -10,66 +10,78 @@
     >
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/screenCard"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:backgroundTint="@color/cardBackground"
-        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     <TextView
         android:id="@+id/textView"
+        android:text="Scan Pacientes"
         android:textColor="@color/textPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
-        android:text="Scan Pacientes"
         android:layout_gravity="center"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.001"
-        tools:layout_editor_absoluteX="-3dp" />
+        />
 
     </com.google.android.material.card.MaterialCardView>
 
+    <LinearLayout
+        android:id="@+id/btnLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/screenCard"
+        >
+
+
+        <Button
+            android:id="@+id/scanBtn"
+            android:text="Scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="112dp"
+            android:backgroundTint="@color/buttonPrimary"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.0"
+            />
+
+
     <Button
         android:id="@+id/clearBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="100dp"
-        android:backgroundTint="@color/buttonPrimary"
-        android:gravity="center"
         android:text="Clear"
-         />
-
-    <Button
-        android:id="@+id/scanBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="96dp"
         android:backgroundTint="@color/buttonPrimary"
         android:gravity="center"
-        android:text="Scan"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/scanBtn"
         />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="409dp"
-        android:layout_height="585dp"
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:clipToPadding="false"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="144dp"
-        tools:listitem="@layout/scan_screen_itemview"
-
-        />
+        app:layout_constraintTop_toBottomOf="@+id/btnLayout"
+        tools:listitem="@layout/scan_screen_itemview" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

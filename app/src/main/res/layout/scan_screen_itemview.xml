@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:padding="25sp"
+            android:padding="20sp"
             android:text="Paciente"
             android:textSize="20dp"
 

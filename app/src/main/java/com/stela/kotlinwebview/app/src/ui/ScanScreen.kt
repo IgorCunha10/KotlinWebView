@@ -1,4 +1,4 @@
-package com.stela.kotlinwebview.app.src
+package com.stela.kotlinwebview.app.src.ui
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

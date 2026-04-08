@@ -17,10 +17,10 @@
         android:theme="@style/Theme.KotlinWebView"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".app.src.ScanScreen"
+            android:name=".app.src.ui.ScanScreen"
             android:exported="false" />
         <activity
-            android:name=".app.src.MainActivity"
+            android:name=".app.src.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

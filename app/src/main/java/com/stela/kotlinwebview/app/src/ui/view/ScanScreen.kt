@@ -1,4 +1,4 @@
-package com.stela.kotlinwebview.app.src.ui
+package com.stela.kotlinwebview.app.src.ui.view
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -14,7 +14,6 @@ class ScanScreen : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ScanAdapter
     private val itemList = mutableListOf<ScanAdapter>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

@@ -1,4 +1,4 @@
-package com.stela.kotlinwebview.app.src.ui
+package com.stela.kotlinwebview.app.src.ui.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,10 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.stela.kotlinwebview.R
-import com.stela.kotlinwebview.app.src.adapter.ScanAdapter
 
 class MainActivity : AppCompatActivity() {
 

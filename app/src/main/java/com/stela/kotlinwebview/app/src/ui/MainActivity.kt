@@ -18,8 +18,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
     private lateinit var fabScanBtn: FloatingActionButton
-    private lateinit var adapter : ScanAdapter
-    private val itemList = mutableListOf<ScanAdapter>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,16 +29,12 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        adapter = ScanAdapter(itemList)
-
         initView()
         webView = findViewById<WebView>(R.id.web)
         initWebView()
         fabScanBtn.hide()
         initListeners()
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.adapter = adapter
     }
 
     private fun initListeners() {

@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation("org.greenrobot:eventbus:3.3.1")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

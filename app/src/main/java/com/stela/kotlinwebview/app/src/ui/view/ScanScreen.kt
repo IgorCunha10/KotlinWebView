@@ -50,6 +50,7 @@ class ScanScreen : AppCompatActivity() {
         scanBtn = findViewById<FloatingActionButton>(R.id.fabScanBtn)
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
     }
+
 //    private fun initRecyclerView() {
 //        recyclerView.adapter = adapter
 //    }
@@ -60,11 +61,17 @@ class ScanScreen : AppCompatActivity() {
         connectBtn.setOnClickListener {
             readerManager.connect { success, message ->
                 if (success) {
-                    Toast.makeText(this, "Leitora Conectada", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        "Leitora Conectada",
+                        Toast.LENGTH_SHORT).show()
                     isConnected = true
+
                 } else {
-                    Toast.makeText(this, "Falha em conectar leitora", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        "Falha em conectar leitora",
+                        Toast.LENGTH_SHORT).show()
                     isConnected = false
+
                 }
             }
         }

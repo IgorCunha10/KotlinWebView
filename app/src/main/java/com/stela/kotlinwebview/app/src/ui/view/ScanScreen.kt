@@ -2,6 +2,7 @@ package com.stela.kotlinwebview.app.src.ui.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.MotionEvent
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -39,8 +40,8 @@ class ScanScreen : AppCompatActivity() {
 
         readerManager = ReaderManager(this)
         initView()
-        //initRecyclerView()
         initListeners()
+//        initRecyclerView()
         initReader()
     }
 
@@ -52,7 +53,7 @@ class ScanScreen : AppCompatActivity() {
     }
 
 //    private fun initRecyclerView() {
-//        recyclerView.adapter = adapter
+//        recyclerView.adapter = readerAdapter
 //    }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -76,12 +77,22 @@ class ScanScreen : AppCompatActivity() {
             }
         }
 
+        scanBtn.setOnTouchListener { v, event ->  {
+            when(event.getAction()) {
+            MotionEvent.ACTION_DOWN ->
+            }
+            }
+        }
+
+        clearBtn.setOnClickListener { v -> {
+
+        }
+        }
     }
 
     private fun initReader() {
         readerAdapter = ScanAdapter(mutableListOf())
         recyclerView.adapter = readerAdapter
-
     }
 
     override fun onDestroy() {

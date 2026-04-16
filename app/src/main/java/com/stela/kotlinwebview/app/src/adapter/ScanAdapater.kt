@@ -27,8 +27,8 @@ class ScanAdapter(private val itemList: MutableList<EpcBean>) :
 
     override fun onBindViewHolder(holder: ScanViewHolder, position: Int) {
         val item = itemList[position]
-        holder.patientName.text = item.toString()
-        holder.patientTag.text = item.toString()
+        holder.patientName.text = item.strepc
+        holder.patientTag.text = item.strepc
     }
 
     override fun getItemCount(): Int = itemList.size

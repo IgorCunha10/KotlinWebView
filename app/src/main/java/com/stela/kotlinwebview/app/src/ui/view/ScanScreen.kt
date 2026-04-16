@@ -1,14 +1,13 @@
 package com.stela.kotlinwebview.app.src.ui.view
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.MotionEvent
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.grotg.hpp.otglibrary.param.EpcBean
@@ -19,19 +18,20 @@ import com.stela.kotlinwebview.app.src.domain.ReaderManager
 class ScanScreen : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: ScanAdapter
-    private lateinit var readerManager : ReaderManager
-    private lateinit var scanBtn : FloatingActionButton
-    private lateinit var clearBtn: Button
-    private lateinit var connectBtn : Button
-    private var isConnected : Boolean = false
-    private val itemList = mutableListOf<EpcBean>()
     private lateinit var readerAdapter: ScanAdapter
+    private lateinit var readerManager: ReaderManager
+    private lateinit var scanBtn: FloatingActionButton
+    private lateinit var clearBtn: Button
+    private lateinit var connectBtn: Button
+    private var isConnected: Boolean = false
+
+    private val itemList = mutableListOf<EpcBean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_scan_screen)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -40,64 +40,69 @@ class ScanScreen : AppCompatActivity() {
 
         readerManager = ReaderManager(this)
         initView()
+        initRecyclerView()
         initListeners()
-//        initRecyclerView()
-        initReader()
     }
 
     private fun initView() {
-        connectBtn = findViewById<Button>(R.id.connectBtn)
-        clearBtn = findViewById<Button>(R.id.clearBtn)
-        scanBtn = findViewById<FloatingActionButton>(R.id.fabScanBtn)
-        recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        connectBtn = findViewById(R.id.connectBtn)
+        clearBtn = findViewById(R.id.clearBtn)
+        scanBtn = findViewById(R.id.fabScanBtn)
+        recyclerView = findViewById(R.id.recyclerView)
     }
 
-//    private fun initRecyclerView() {
-//        recyclerView.adapter = readerAdapter
-//    }
+    private fun initRecyclerView() {
+        readerAdapter = ScanAdapter(itemList)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = readerAdapter
+    }
 
-    @SuppressLint("ClickableViewAccessibility")
     private fun initListeners() {
 
         connectBtn.setOnClickListener {
             readerManager.connect { success, message ->
                 if (success) {
-                    Toast.makeText(this,
-                        "Leitora Conectada",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Leitora Conectada", Toast.LENGTH_SHORT).show()
                     isConnected = true
-
                 } else {
-                    Toast.makeText(this,
-                        "Falha em conectar leitora",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Falha em conectar leitora", Toast.LENGTH_SHORT).show()
                     isConnected = false
-
                 }
             }
         }
 
-        scanBtn.setOnTouchListener { v, event ->  {
-            when(event.getAction()) {
-            MotionEvent.ACTION_DOWN ->
+        readerManager.setTagOnRead(object : ReaderManager.TagCallBack {
+            override fun onTagRead(epcBean: EpcBean) {
+                runOnUiThread {
+                    val alreadyExists = itemList.any { it == epcBean }
+                    if (!alreadyExists) {
+                        itemList.add(epcBean)
+                        readerAdapter.notifyItemInserted(itemList.size - 1)
+                        recyclerView.scrollToPosition(itemList.size - 1)
+                    }
+                }
             }
+        })
+
+        scanBtn.setOnClickListener {
+            if (!isConnected) {
+                Toast.makeText(this, "Conecte a leitora primeiro", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+            readerManager.startScan()
         }
 
-        clearBtn.setOnClickListener { v -> {
-
+        clearBtn.setOnClickListener {
+            itemList.clear()
+            readerAdapter.notifyDataSetChanged()
         }
-        }
-    }
-
-    private fun initReader() {
-        readerAdapter = ScanAdapter(mutableListOf())
-        recyclerView.adapter = readerAdapter
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        readerManager.release()
+
+    }
     }
 
-}
+
+

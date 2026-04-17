@@ -62,11 +62,15 @@ class ScanScreen : AppCompatActivity() {
         connectBtn.setOnClickListener {
             readerManager.connect { success, message ->
                 if (success) {
-                    Toast.makeText(this, "Leitora Conectada", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Leitora Conectada",
+                        Toast.LENGTH_SHORT).show()
                     isConnected = true
+
                 } else {
-                    Toast.makeText(this, "Falha em conectar leitora", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Falha em conectar leitora",
+                        Toast.LENGTH_SHORT).show()
                     isConnected = false
+
                 }
             }
         }
@@ -86,7 +90,8 @@ class ScanScreen : AppCompatActivity() {
 
         scanBtn.setOnClickListener {
             if (!isConnected) {
-                Toast.makeText(this, "Conecte a leitora primeiro", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Conecte a leitora primeiro",
+                    Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             readerManager.startScan()

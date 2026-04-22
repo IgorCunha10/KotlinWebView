@@ -125,8 +125,6 @@ class ScanScreen : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-
-
     }
     }
 

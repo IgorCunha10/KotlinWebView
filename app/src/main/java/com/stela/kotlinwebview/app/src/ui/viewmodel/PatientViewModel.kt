@@ -25,16 +25,20 @@ class PatientViewModel : ViewModel(){
         viewModelScope.launch {
             _loading.value = true
             try {
-                val patient = repository.findPatient(tag)
+                val response = repository.findPatient(tag)
+                val patient = response.patients.firstOrNull{it.tag == tag}
 
-                val actualList = _patients.value.orEmpty().toMutableList()
-                actualList.add(0, patient)
-                _patients.value = actualList
+                if(patient != null) {
+                    val actualList = _patients.value.orEmpty().toMutableList()
+                    actualList.add(0, patient)
+                    _patients.value = actualList
+                } else {
+                    _erro.value = "Tag is not associated to any patient."
+                }
 
-            } catch (e: Exception) {
-                _erro.value = e.message ?: "Tag is not associated to any patient"
-            }
-            finally {
+            } catch (e : Exception) {
+                _erro.value = e.message ?: "Erro ao verificar tag"
+            } finally {
                 _loading.value = false
             }
         }

@@ -1,6 +1,6 @@
 package com.stela.kotlinwebview.app.src.model
 
-data class PatientApi(
+data class PatientData(
     val name: String,
     val birth: String,
     val tag: String,

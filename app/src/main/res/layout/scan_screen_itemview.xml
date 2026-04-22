@@ -16,7 +16,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/itViewTxt"
+                android:id="@+id/patName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -24,16 +24,39 @@
                 android:padding="20sp"
                 android:text="Paciente"
                 android:textSize="20dp"
-
+                android:textColor="@color/textPrimary"
                 />
 
             <TextView
-                android:id="@+id/itViewTag"
+                android:id="@+id/patTag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:text="Tag number" />
+                android:text="Tag number"
+                android:textColor="@color/textPrimary"
+                />
+
+            <TextView
+                android:id="@+id/patBirthDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="Date of Birth"
+                android:textColor="@color/textPrimary"
+                />
+
+            <TextView
+                android:id="@+id/patCovenant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="Covenant"
+                android:textColor="@color/textPrimary"
+                />
+
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

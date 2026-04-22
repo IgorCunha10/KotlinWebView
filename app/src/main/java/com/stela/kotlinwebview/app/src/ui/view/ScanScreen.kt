@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -14,6 +15,7 @@ import com.grotg.hpp.otglibrary.param.EpcBean
 import com.stela.kotlinwebview.R
 import com.stela.kotlinwebview.app.src.adapter.ScanAdapter
 import com.stela.kotlinwebview.app.src.domain.ReaderManager
+import com.stela.kotlinwebview.app.src.ui.viewmodel.PatientViewModel
 
 class ScanScreen : AppCompatActivity() {
 
@@ -23,9 +25,10 @@ class ScanScreen : AppCompatActivity() {
     private lateinit var scanBtn: FloatingActionButton
     private lateinit var clearBtn: Button
     private lateinit var connectBtn: Button
+    private lateinit var viewModel : PatientViewModel
     private var isConnected: Boolean = false
 
-    private val itemList = mutableListOf<EpcBean>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +42,12 @@ class ScanScreen : AppCompatActivity() {
         }
 
         readerManager = ReaderManager(this)
+        viewModel = ViewModelProvider(this)[PatientViewModel::class.java]
+
         initView()
         initRecyclerView()
         initListeners()
+        observeViewModel()
     }
 
     private fun initView() {
@@ -52,7 +58,7 @@ class ScanScreen : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        readerAdapter = ScanAdapter(itemList)
+        readerAdapter = ScanAdapter()
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = readerAdapter
     }
@@ -78,14 +84,10 @@ class ScanScreen : AppCompatActivity() {
         readerManager.setTagOnRead(object : ReaderManager.TagCallBack {
             override fun onTagRead(epcBean: EpcBean) {
                 runOnUiThread {
-                    val alreadyExists = itemList.any { it == epcBean }
-                    if (!alreadyExists) {
-                        itemList.add(epcBean)
-                        readerAdapter.notifyItemInserted(itemList.size - 1)
-                        recyclerView.scrollToPosition(itemList.size - 1)
+                   viewModel.verifyTag(epcBean.strepc)
                     }
                 }
-            }
+
         })
 
         scanBtn.setOnClickListener {
@@ -98,13 +100,32 @@ class ScanScreen : AppCompatActivity() {
         }
 
         clearBtn.setOnClickListener {
-            itemList.clear()
-            readerAdapter.notifyDataSetChanged()
+                viewModel.clearList()
+                readerAdapter.notifyDataSetChanged()
         }
     }
 
+    private fun observeViewModel() {
+        viewModel.patients.observe(this) {
+            list -> readerAdapter.updateList(list)
+            recyclerView.scrollToPosition(0)
+        }
+
+        viewModel.loading.observe(this) {
+            isLoading -> scanBtn.isEnabled = !isLoading
+        }
+
+        viewModel.erro.observe(this) {
+            message -> message?.let {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+        }
+    }
+
+
     override fun onDestroy() {
         super.onDestroy()
+
 
     }
     }

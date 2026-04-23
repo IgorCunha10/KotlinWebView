@@ -8,6 +8,6 @@ interface PatientApiService {
 
     @GET("rehab_prontuario/pacienteTag.php")
 
-    suspend fun getPatient(@Query("tag") tag: String) : List<PatientData>
+    suspend fun getPatientByTag(@Query("tag") tag: String) : List<PatientData>
 
 }

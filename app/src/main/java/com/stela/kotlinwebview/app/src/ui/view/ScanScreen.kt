@@ -108,7 +108,6 @@ class ScanScreen : AppCompatActivity() {
                 }
                 readerManager.startScan()
 
-
             clearBtn.setOnClickListener {
                 scannedTags.clear()
                 viewModel.clearList()

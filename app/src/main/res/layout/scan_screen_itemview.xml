@@ -57,6 +57,34 @@
                 android:textColor="@color/textPrimary"
                 />
 
+            <TextView
+                android:id="@+id/decText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Do you wish to proceed to patient assessment?"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"
+                >
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/assesmentBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/buttonPrimary"
+                    app:srcCompat="@android:drawable/btn_star"
+                    />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

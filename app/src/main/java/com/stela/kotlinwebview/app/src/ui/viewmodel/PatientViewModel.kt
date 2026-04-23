@@ -14,7 +14,6 @@ class PatientViewModel : ViewModel(){
     private val readTags = mutableSetOf<String>()
     private val _patients = MutableLiveData<List<PatientData>>(emptyList())
     val patients : LiveData<List<PatientData>> = _patients
-
     private val _loading = MutableLiveData<Boolean>()
     val loading : LiveData<Boolean> = _loading
 
@@ -45,11 +44,10 @@ class PatientViewModel : ViewModel(){
             }
         }
     }
-
     fun clearList() {
         _patients.value = emptyList()
         readTags.clear()
-    }
+     }
 
     }
 

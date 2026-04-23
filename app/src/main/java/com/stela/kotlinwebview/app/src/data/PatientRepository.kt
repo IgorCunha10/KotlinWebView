@@ -5,7 +5,7 @@ import com.stela.kotlinwebview.app.src.network.RetrofitClient
 
 class PatientRepository {
     suspend fun findPatient(tag : String) : PatientData? {
-        val response = RetrofitClient.instance.getPatient(tag)
+        val response = RetrofitClient.instance.getPatientByTag(tag)
         return response.firstOrNull()
     }
 

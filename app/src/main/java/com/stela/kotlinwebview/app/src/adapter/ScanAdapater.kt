@@ -5,10 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.stela.kotlinwebview.R
 import com.stela.kotlinwebview.app.src.model.PatientData
 
-class ScanAdapter(private val itemList: MutableList<PatientData> = mutableListOf()) :
+class ScanAdapter(private val itemList: MutableList<PatientData> = mutableListOf(),
+                  private val onOpenWebView: (String) -> Unit
+) :
     RecyclerView.Adapter<ScanAdapter.ScanViewHolder>() {
 
     class ScanViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -16,6 +19,9 @@ class ScanAdapter(private val itemList: MutableList<PatientData> = mutableListOf
         val patientTag: TextView = itemView.findViewById(R.id.patTag)
         val patientBirth : TextView = itemView.findViewById(R.id.patBirthDate)
         val patientCovenant : TextView = itemView.findViewById(R.id.patCovenant)
+        val btnRelatorio: FloatingActionButton = itemView.findViewById(R.id.assesmentBtn)
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScanViewHolder {
@@ -33,6 +39,9 @@ class ScanAdapter(private val itemList: MutableList<PatientData> = mutableListOf
         holder.patientTag.text = "Tag: ${patient.tag}"
         holder.patientBirth.text = "Date of Birth: ${patient.birth}"
         holder.patientCovenant.text = "Covenant: ${patient.covenant}"
+        holder.btnRelatorio.setOnClickListener {
+                onOpenWebView(patient.tag)
+        }
     }
 
     override fun getItemCount(): Int = itemList.size

@@ -3,8 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-feature android:name="android.hardware.usb.host"/>
-    <uses-permission android:name="android.permission.USB_PERMISSION"/>
+
+    <uses-feature android:name="android.hardware.usb.host" />
+
+    <uses-permission android:name="android.permission.USB_PERMISSION" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinWebView"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".app.src.ui.view.WebViewActivity"
+            android:exported="false" />
         <activity
             android:name=".app.src.ui.view.ScanScreen"
             android:exported="false" />

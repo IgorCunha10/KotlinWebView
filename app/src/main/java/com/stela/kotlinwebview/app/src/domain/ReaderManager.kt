@@ -7,7 +7,7 @@ import com.grotg.hpp.otglibrary.param.EpcBean
 
 class ReaderManager {
 
-    private lateinit var otgReader : OtgReader
+    private var otgReader : OtgReader
 
     interface TagCallBack {
         fun onTagRead(epcBean: EpcBean)

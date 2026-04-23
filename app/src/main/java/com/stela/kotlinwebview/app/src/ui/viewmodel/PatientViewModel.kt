@@ -24,9 +24,10 @@ class PatientViewModel : ViewModel(){
     fun verifyTag(tag: String) {
         viewModelScope.launch {
             _loading.value = true
+
             try {
-                val response = repository.findPatient(tag)
-                val patient = response.patients.firstOrNull{it.tag == tag}
+
+                val patient = repository.findPatient(tag)
 
                 if(patient != null) {
                     val actualList = _patients.value.orEmpty().toMutableList()

@@ -25,9 +25,9 @@ class ScanScreen : AppCompatActivity() {
     private lateinit var scanBtn: FloatingActionButton
     private lateinit var clearBtn: Button
     private lateinit var connectBtn: Button
-    private lateinit var viewModel : PatientViewModel
+    private lateinit var viewModel: PatientViewModel
     private var isConnected: Boolean = false
-
+    private val scannedTags = mutableSetOf<String>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,13 +68,17 @@ class ScanScreen : AppCompatActivity() {
         connectBtn.setOnClickListener {
             readerManager.connect { success, message ->
                 if (success) {
-                    Toast.makeText(this, "Leitora Conectada",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this, "Leitora Conectada",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     isConnected = true
 
                 } else {
-                    Toast.makeText(this, "Falha em conectar leitora",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this, "Falha em conectar leitora",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     isConnected = false
 
                 }
@@ -84,49 +88,58 @@ class ScanScreen : AppCompatActivity() {
         readerManager.setTagOnRead(object : ReaderManager.TagCallBack {
             override fun onTagRead(epcBean: EpcBean) {
                 runOnUiThread {
-                   viewModel.verifyTag(epcBean.strepc)
+                    val tag = epcBean.strepc
+                    if(!scannedTags.contains(tag)) {
+                        scannedTags.add(tag)
+                        viewModel.verifyTag(tag)
                     }
                 }
-
+            }
         })
 
         scanBtn.setOnClickListener {
-            if (!isConnected) {
-                Toast.makeText(this, "Conecte a leitora primeiro",
-                    Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            readerManager.startScan()
-        }
 
-        clearBtn.setOnClickListener {
+                if (!isConnected) {
+                    Toast.makeText(
+                        this, "Conecte a leitora primeiro",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                }
+                readerManager.startScan()
+
+
+            clearBtn.setOnClickListener {
+                scannedTags.clear()
                 viewModel.clearList()
                 readerAdapter.notifyDataSetChanged()
+            }
         }
     }
 
-    private fun observeViewModel() {
-        viewModel.patients.observe(this) {
-            list -> readerAdapter.updateList(list)
-            recyclerView.scrollToPosition(0)
-        }
+        private fun observeViewModel() {
+            viewModel.patients.observe(this) { list ->
+                readerAdapter.updateList(list)
+                recyclerView.scrollToPosition(0)
+            }
 
-        viewModel.loading.observe(this) {
-            isLoading -> scanBtn.isEnabled = !isLoading
-        }
+            viewModel.loading.observe(this) { isLoading ->
+                scanBtn.isEnabled = !isLoading
+            }
 
-        viewModel.erro.observe(this) {
-            message -> message?.let {
-                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            viewModel.erro.observe(this) { message ->
+                message?.let {
+                    Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
-        }
-    }
-
 
     override fun onDestroy() {
         super.onDestroy()
+        }
+
     }
-    }
+
 
 
 

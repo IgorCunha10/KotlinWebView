@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 class PatientViewModel : ViewModel(){
 
     private val repository = PatientRepository()
-
+    private val readTags = mutableSetOf<String>()
     private val _patients = MutableLiveData<List<PatientData>>(emptyList())
     val patients : LiveData<List<PatientData>> = _patients
 
@@ -30,6 +30,7 @@ class PatientViewModel : ViewModel(){
                 val patient = repository.findPatient(tag)
 
                 if(patient != null) {
+                    readTags.add(tag)
                     val actualList = _patients.value.orEmpty().toMutableList()
                     actualList.add(0, patient)
                     _patients.value = actualList
@@ -47,6 +48,7 @@ class PatientViewModel : ViewModel(){
 
     fun clearList() {
         _patients.value = emptyList()
+        readTags.clear()
     }
 
     }

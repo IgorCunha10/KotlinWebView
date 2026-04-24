@@ -1,6 +1,7 @@
 package com.stela.kotlinwebview.app.src.ui.view
 
 import android.os.Bundle
+import android.webkit.WebView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -17,5 +18,13 @@ class WebViewActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val tag = intent.getStringExtra("PATIENT_ID") ?: return
+        val url = "http://http://192.168.1.180/browser/#/patient/$tag"
+
+        val webView = findViewById<WebView>(R.id.web)
+        webView.settings.javaScriptEnabled = true
+        webView.loadUrl(url)
+
     }
 }

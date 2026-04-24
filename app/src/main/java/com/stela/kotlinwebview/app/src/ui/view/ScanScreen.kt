@@ -1,5 +1,6 @@
 package com.stela.kotlinwebview.app.src.ui.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
@@ -58,7 +59,13 @@ class ScanScreen : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        readerAdapter = ScanAdapter()
+        readerAdapter = ScanAdapter(
+            onOpenWebView = { id ->
+                val intent = Intent(this, WebViewActivity::class.java)
+                intent.putExtra("PATIENT_ID", id)
+                startActivity(intent)
+            }
+        )
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = readerAdapter
     }

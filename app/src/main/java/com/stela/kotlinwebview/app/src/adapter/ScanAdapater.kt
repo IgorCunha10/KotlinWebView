@@ -1,5 +1,7 @@
 package com.stela.kotlinwebview.app.src.adapter
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +42,9 @@ class ScanAdapter(private val itemList: MutableList<PatientData> = mutableListOf
         holder.patientBirth.text = "Date of Birth: ${patient.birth}"
         holder.patientCovenant.text = "Covenant: ${patient.covenant}"
         holder.btnRelatorio.setOnClickListener {
-                onOpenWebView(patient.tag)
+            val url = "http://192.168.1.180/browser/#/patient/${patient.tag}"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            holder.itemView.context.startActivity(intent)
         }
     }
 

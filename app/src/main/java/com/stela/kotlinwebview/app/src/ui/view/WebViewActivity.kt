@@ -1,7 +1,9 @@
 package com.stela.kotlinwebview.app.src.ui.view
 
 import android.os.Bundle
+import android.webkit.CookieManager
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,11 +22,35 @@ class WebViewActivity : AppCompatActivity() {
         }
 
         val tag = intent.getStringExtra("PATIENT_ID") ?: return
-        val url = "http://http://192.168.1.180/browser/#/patient/$tag"
+        val patientUrl = "http://192.168.1.180/browser/#/patient/$tag"
+        val loginUrl = "http://192.168.1.180/browser/#/login"
 
         val webView = findViewById<WebView>(R.id.web)
-        webView.settings.javaScriptEnabled = true
-        webView.loadUrl(url)
 
+        CookieManager.getInstance().setAcceptCookie(true)
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
+
+        webView.settings.apply {
+            javaScriptEnabled = true
+            domStorageEnabled = true
+            databaseEnabled = true
+        }
+
+
+        webView.webViewClient = object : WebViewClient () {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+
+                if (url != null && !url.contains("login")) {
+                    if (!url.contains("patient")) {
+                        view?.loadUrl(patientUrl)
+                    }
+                }
+            }
+        }
+
+        webView.loadUrl(loginUrl)
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.stela.kotlinwebview.app.src.ui.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.webkit.CookieManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.enableEdgeToEdge
@@ -12,8 +13,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.stela.kotlinwebview.R
 
 class MainActivity : AppCompatActivity() {
-
-
     private lateinit var webView: WebView
     private lateinit var fabScanBtn: FloatingActionButton
 
@@ -32,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         initWebView()
         fabScanBtn.hide()
         initListeners()
-
     }
 
     private fun initListeners() {
@@ -58,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         webView.loadUrl("http://192.168.1.180/browser/#/login")
+
     }
 
     private fun checkUrl(url: String?) {
